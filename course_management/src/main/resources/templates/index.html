@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--    jquery-->
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!--    semantic ui的css样式-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
+</head>
+<body>
+<div>
+    <input value="数学" type="text" id="name">
+    <input value="2022-11-01" type="text" id="time">
+    <input value="100" type="text" id="number">
+    <input value="01" type="text" id="classroom">
+    <input value="物联网" type="text" id="major">
+    <input value="线上" type="text" id="model">
+    <input id="submit" type="submit">
+</div>
+<div>
+    <input value="数学" type="text" id="name1">
+    <input value="2022-11-01" type="text" id="time1">
+    <input value="100" type="text" id="number1">
+    <input value="01" type="text" id="classroom1">
+    <input value="物联网" type="text" id="major1">
+    <input value="线上" type="text" id="model1">
+    <input id="delete" type="submit" value="删除">
+</div>
+<!--semantic ui的js样式-->
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</body>
+<script>
+    window.onload = function (){
+        $.ajax({
+            url:"/course/list",
+            type: "get",
+            dataType:"json",
+            contentType:"application/json"
+            ,success(resp){
+                console.log(resp)
+            }
+
+        })
+
+        $("#delete").click(function () {
+            $.ajax({
+                url:"/course/delete",
+                type: "post",
+                dataType:"json",
+                contentType:"application/json",
+                data:JSON.stringify({
+                    "courseName":document.getElementById("name1").value,
+                    "lessonTime":document.getElementById("time1").value,
+                    "optionalNumber":document.getElementById("number1").value,
+                    "classroom":document.getElementById("classroom1").value,
+                    "optionalMajor":document.getElementById("major1").value,
+                    "modeDelivery":document.getElementById("model1").value,
+                })
+                ,success(resp){
+                    console.log(resp)
+                }
+
+            })
+        })
+        $("#submit").click(function () {
+            $.ajax({
+                url:"/course/add",
+                type: "post",
+                dataType:"json",
+                contentType:"application/json",
+                data:JSON.stringify({
+                    "courseName":document.getElementById("name").value,
+                    "lessonTime":document.getElementById("time").value,
+                    "optionalNumber":document.getElementById("number").value,
+                    "classroom":document.getElementById("classroom").value,
+                    "optionalMajor":document.getElementById("major").value,
+                    "modeDelivery":document.getElementById("model").value,
+                })
+                ,success(resp){
+                    console.log(resp)
+                }
+
+            })
+        })
+    }
+</script>
+</html>
